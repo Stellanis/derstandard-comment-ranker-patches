@@ -6,7 +6,7 @@ Target package:
 derstandard.at.istandardx
 ```
 
-This bundle is scaffolded but intentionally does not yet include an executable patch. The concrete patch must be written after analyzing the current app APK, because Morphe/ReVanced bytecode patches need stable fingerprints against real methods/classes.
+This bundle is scaffolded but intentionally does not yet include a complete Morphe bytecode patch. The concrete patch has been proven manually against the pulled APK and can now be ported to a Morphe patch.
 
 ## Desired behavior
 
@@ -23,15 +23,27 @@ Add the existing browser extension's comment ranking feature directly inside the
 
 ## Preferred patch route
 
-1. Pull installed APK/splits with `scripts/pull-derstandard-apk.ps1`.
-2. Decode/decompile with `scripts/decode-apk.ps1`.
-3. Search for WebView use:
-   - `WebView`
-   - `evaluateJavascript`
-   - `WebViewClient`
-   - `addJavascriptInterface`
-4. If comments are WebView-rendered, patch WebView completion to inject `assets/extension/content.js` + `assets/extension/rating.js`.
-5. If comments are native, fingerprint comment loading/sorting classes and patch the data ordering before adapter submission.
+Manual proof patch:
+
+1. Copy `content.js`, `rating.js`, and `bootstrap.js` into `assets/dst-ranker/`.
+2. Add `CommentRankerInjector.smali` under:
+   `smali_classes4/derstandard/at/istandardx/features/webview/fragment/`.
+3. In `WebViewViewModel$webViewClient$1.smali`, patch:
+   `onPageFinished(Landroid/webkit/WebView;Ljava/lang/String;)V`
+4. Preserve the original `url` parameter in `v2`.
+5. Call:
+
+```smali
+invoke-static {p1, v2}, Lderstandard/at/istandardx/features/webview/fragment/CommentRankerInjector;->inject(Landroid/webkit/WebView;Ljava/lang/String;)V
+```
+
+The Morphe implementation should fingerprint this anonymous WebViewClient by:
+
+- class extends `Landroid/webkit/WebViewClient;`
+- method name `onPageFinished`
+- invokes `WebViewViewModel;->access$loadOpenType(...)V`
+- invokes `WebView;->sendAccessibilityEvent(I)V`
+- class path contains `features/webview/fragment/WebViewViewModel$webViewClient$1`
 
 ## Current build note
 
@@ -47,4 +59,3 @@ Place it in:
 ```text
 %USERPROFILE%\.gradle\gradle.properties
 ```
-
