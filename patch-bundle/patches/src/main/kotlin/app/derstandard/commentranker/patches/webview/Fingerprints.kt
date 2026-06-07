@@ -13,7 +13,7 @@ internal object DerStandardWebViewPageFinishedFingerprint : Fingerprint(
     filters = listOf(
         methodCall(
             opcode = Opcode.INVOKE_STATIC,
-            smali = "Lderstandard/at/istandardx/features/webview/fragment/WebViewViewModel;->access\$loadOpenType(Lderstandard/at/istandardx/features/webview/fragment/WebViewViewModel;Ljava/lang/String;)V",
+            smali = "Lderstandard/at/istandardx/features/webview/fragment/WebViewViewModel;->access\$loadOpenType(Lderstandard/at/istandardx/features/webview/fragment/WebViewViewModel;)V",
             location = MatchAfterWithin(40)
         ),
         methodCall(
