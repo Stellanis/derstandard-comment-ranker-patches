@@ -33,12 +33,13 @@ Morphe dependencies are hosted through GitHub Packages. Configure a GitHub token
 ```powershell
 cd patch-bundle
 .\gradlew.bat build
+.\gradlew.bat patches:buildAndroid
 .\gradlew.bat generatePatchesList
 ```
 
 Expected output:
 
-- `patches/build/libs/*.mpp`
+- `patches/build/libs/*.mpp` with `classes.dex` entries for Morphe Manager
 - `extensions/extension/build/outputs/mpe/extensions/extension.mpe`
 - updated `patches-list.json`
 
