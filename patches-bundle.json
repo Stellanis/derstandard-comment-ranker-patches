@@ -1,7 +1,7 @@
 {
   "created_at": "2026-06-07T12:00:00",
-  "description": "Merge the comment ranker extension into patched APKs.",
-  "download_url": "https://github.com/Stellanis/derstandard-comment-ranker-patches/releases/download/v1.0.2/patches-1.0.2.mpp",
+  "description": "Copy comment ranker JavaScript assets into patched APKs.",
+  "download_url": "https://github.com/Stellanis/derstandard-comment-ranker-patches/releases/download/v1.0.3/patches-1.0.3.mpp",
   "signature_download_url": "",
-  "version": "1.0.2"
+  "version": "1.0.3"
 }

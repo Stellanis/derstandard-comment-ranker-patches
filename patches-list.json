@@ -1,11 +1,13 @@
 {
-  "version": "v1.0.2",
+  "version": "v1.0.3",
   "patches": [
     {
       "name": "Comment ranker",
       "description": "Injects the comment ranking userscript into DER STANDARD article WebViews.",
       "default": true,
-      "dependencies": [],
+      "dependencies": [
+        "Comment ranker assets"
+      ],
       "compatiblePackages": [
         {
           "packageName": "derstandard.at.istandardx",
