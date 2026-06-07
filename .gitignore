@@ -1,0 +1,13 @@
+tools/
+inputs/
+analysis/decompiled/
+analysis/jadx/
+analysis/*.apk
+analysis/*.apks
+analysis/*.xapk
+analysis/*.log
+build/
+dist/
+*.tmp
+*.log
+
