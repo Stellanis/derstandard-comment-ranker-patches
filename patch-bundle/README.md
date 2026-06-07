@@ -18,16 +18,10 @@ Target app:
 
 ## Use In Morphe Manager
 
-After the repository is published, add it as a custom patch source:
+Add this raw bundle metadata URL as a custom patch source:
 
 ```text
-https://github.com/Stellanis/derstandard-comment-ranker-patches
-```
-
-Or use:
-
-```text
-https://morphe.software/add-source?github=Stellanis/derstandard-comment-ranker-patches
+https://raw.githubusercontent.com/Stellanis/derstandard-comment-ranker-patches/refs/heads/morphe-source/patches-bundle.json
 ```
 
 Then select the `Comment ranker` patch for `DER STANDARD Nachrichten`.
