@@ -29,7 +29,63 @@ derstandard.at.istandardx
 
 The Morphe template currently requires GitHub Packages credentials for the `app.morphe.patches` Gradle plugin. See `docs/RESEARCH.md`.
 
-## Next step: connect phone with Wireless Debugging
+## Implemented patch path
+
+The pulled production APK uses an internal Android `WebView` for derstandard.at pages:
+
+- `derstandard.at.istandardx.features.webview.fragment.WebViewViewModel`
+- anonymous client class `WebViewViewModel$webViewClient$1`
+- hook method: `onPageFinished(WebView webView, String url)`
+
+The current patch injects:
+
+- `assets/extension/content.js`
+- `assets/extension/rating.js`
+- a small `chrome.storage.sync` compatibility shim backed by WebView `localStorage`
+
+Injected assets are copied into:
+
+```text
+assets/dst-ranker/
+```
+
+The helper class added to the APK decode tree is:
+
+```text
+derstandard.at.istandardx.features.webview.fragment.CommentRankerInjector
+```
+
+## Current device install status
+
+The original Play Store-signed app was removed and the debug-signed patched split install was installed successfully via:
+
+```powershell
+adb uninstall derstandard.at.istandardx
+adb install-multiple `
+  dist\signed\base-ranker-signed.apk `
+  dist\signed\split_config.arm64_v8a-signed.apk `
+  dist\signed\split_config.xxhdpi-signed.apk
+```
+
+Smoke test:
+
+- App starts through the launcher intent.
+- Logcat showed WebView activity and no immediate app crash.
+- Observed CleverPush network errors are unrelated to the patch.
+
+## Rebuild flow
+
+```powershell
+.\scripts\pull-derstandard-apk.ps1 -DeviceSerial "192.168.123.160:34525" -User 0
+.\scripts\inspect-apk.ps1
+.\scripts\decode-apk.ps1
+.\scripts\apply-webview-injection-patch.ps1
+java -jar tools\apktool_3.0.2.jar b analysis\decompiled\apktool\base -o dist\base-ranker-unsigned.apk
+```
+
+Then zipalign/sign `dist\base-ranker-unsigned.apk` plus the two split APKs with the same signing key and install with `adb install-multiple`.
+
+## Wireless Debugging workflow
 
 On the phone:
 
@@ -54,4 +110,3 @@ Then inspect:
 .\scripts\inspect-apk.ps1
 .\scripts\decode-apk.ps1
 ```
-

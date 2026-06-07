@@ -53,13 +53,19 @@ Existing Android SDK tools:
 
 ### Path A: WebView JavaScript injection
 
-Best case. If the app renders article/forum/comment pages in Android WebView, patch the WebView setup or `WebViewClient.onPageFinished` and call:
+Chosen path. The pulled APK renders derstandard.at pages in an Android WebView. The stable hook is:
 
-```java
-webView.evaluateJavascript(COMMENT_RANKER_SCRIPT, null);
+```text
+derstandard.at.istandardx.features.webview.fragment.WebViewViewModel$webViewClient$1.onPageFinished(WebView, String)
 ```
 
-This reuses the existing extension logic with minimal bytecode changes.
+Patch:
+
+```java
+CommentRankerInjector.inject(webView, url);
+```
+
+This reuses the existing extension logic with minimal bytecode changes. The injector loads `assets/dst-ranker/bootstrap.js`, `content.js`, and `rating.js`, then evaluates them in the WebView after each derstandard.at/de page load.
 
 ### Path B: Native adapter/list sorting
 
@@ -76,4 +82,3 @@ Then patch sorting before adapter submit/update. This is more robust in-app but 
 ### Path C: Runtime hook
 
 Use LSPosed/Xposed-style runtime hooks instead of rebuilding the APK. This is less aligned with "mod the APK", but useful for proving the hook before baking it into a Morphe patch.
-

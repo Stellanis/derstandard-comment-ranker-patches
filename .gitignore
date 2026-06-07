@@ -2,6 +2,7 @@ tools/
 inputs/
 analysis/decompiled/
 analysis/jadx/
+analysis/
 analysis/*.apk
 analysis/*.apks
 analysis/*.xapk
