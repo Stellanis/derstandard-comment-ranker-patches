@@ -2,13 +2,15 @@
 
 Goal: integrate the derStandard Comment Ranker behavior directly into the Android app package `derstandard.at.istandardx`.
 
+The reusable Morphe patch bundle lives in [`patch-bundle/`](patch-bundle/). This repository intentionally does not include any derStandard APK, decompiled app output, signed APK, keystore, or build artifact.
+
 This project is intentionally structured as a reproducible personal-use patch workflow:
 
 - Pull the installed APK or split APKs from your own Android device via ADB.
 - Inspect whether the forum/comments view is WebView-based or native.
 - If WebView-based, inject the existing comment-ranker JavaScript into the app WebView.
 - If native, identify the comment list model/adapter and patch sorting there.
-- Package the result through a Morphe/ReVanced-style patch bundle where feasible.
+- Package the result through a Morphe patch bundle for collaboration and reuse.
 
 No signature, licensing, payment, server, or entitlement checks are bypassed here.
 
