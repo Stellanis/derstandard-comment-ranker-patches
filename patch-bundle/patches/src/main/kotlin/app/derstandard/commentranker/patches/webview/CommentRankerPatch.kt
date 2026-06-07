@@ -13,6 +13,7 @@ val commentRankerPatch = bytecodePatch(
     description = "Injects the comment ranking userscript into DER STANDARD article WebViews."
 ) {
     compatibleWith(COMPATIBILITY_DERSTANDARD)
+    extendWith("extensions/extension.mpe")
 
     execute {
         DerStandardWebViewPageFinishedFingerprint.method.addInstructions(
