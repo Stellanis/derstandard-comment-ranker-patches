@@ -8,6 +8,7 @@ analysis/*.xapk
 analysis/*.log
 build/
 dist/
+.gradle/
+**/.gradle/
 *.tmp
 *.log
-
