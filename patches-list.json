@@ -1,4 +1,30 @@
 {
-  "version": "",
-  "patches": []
+  "version": "v1.0.0",
+  "patches": [
+    {
+      "name": "Comment ranker",
+      "description": "Injects the comment ranking userscript into DER STANDARD article WebViews.",
+      "default": true,
+      "dependencies": [],
+      "compatiblePackages": [
+        {
+          "packageName": "derstandard.at.istandardx",
+          "name": "DER STANDARD Nachrichten",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#B7CCA3",
+          "signatures": null,
+          "targets": [
+            {
+              "version": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    }
+  ]
 }
