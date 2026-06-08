@@ -8,7 +8,7 @@ patches {
         author = "mizer"
         contact = "na"
         website = "na"
-        license = "GPLv3"
+        license = "EUPL-1.2"
     }
 }
 

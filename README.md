@@ -23,9 +23,13 @@ If Morphe still shows an older version or zero patches, remove the source, force
 ## Notes
 
 - The patch targets package `derstandard.at.istandardx`.
-- The patch injects the bundled comment ranker into article WebViews.
+- The patch integrates the extension `derStandard Comment Ranker` by `air.cat` into article WebViews.
 - No derStandard APKs, signed APKs, keystores, or app build outputs are stored in this repository.
+
+## Attribution
+
+This Morphe patch integrates the comment sorting behavior from the browser extension `derStandard Comment Ranker` by `air.cat`.
 
 ## License
 
-GPLv3. See [LICENSE](LICENSE).
+Licensed under the European Union Public Licence 1.2 (`EUPL-1.2`). See [LICENSE](LICENSE).

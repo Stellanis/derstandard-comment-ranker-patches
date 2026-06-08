@@ -22,6 +22,10 @@ Then refresh the source, select `DER STANDARD Nachrichten`, and enable the `Comm
 
 This repository does not contain or distribute the derStandard APK. Use Morphe with your own APK.
 
+## Attribution
+
+This Morphe patch integrates the comment sorting behavior from the browser extension `derStandard Comment Ranker` by `air.cat`.
+
 ## License
 
-GPLv3. See [LICENSE](LICENSE).
+Licensed under the European Union Public Licence 1.2 (`EUPL-1.2`). See [LICENSE](LICENSE).
