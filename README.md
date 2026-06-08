@@ -1,114 +1,31 @@
-# derStandard APK Comment Ranker Mod
+# derStandard Comment Ranker Morphe Patch
 
-Goal: integrate the derStandard Comment Ranker behavior directly into the Android app package `derstandard.at.istandardx`.
+Morphe patch source for adding comment sorting to the Android app `DER STANDARD Nachrichten`.
 
-The reusable Morphe patch bundle lives in [`patch-bundle/`](patch-bundle/). This repository intentionally does not include any derStandard APK, decompiled app output, signed APK, keystore, or build artifact.
+This repository does not distribute the derStandard app. You need to provide your own APK in Morphe.
 
-This project is intentionally structured as a reproducible personal-use patch workflow:
+## Installation
 
-- Pull the installed APK or split APKs from your own Android device via ADB.
-- Inspect whether the forum/comments view is WebView-based or native.
-- If WebView-based, inject the existing comment-ranker JavaScript into the app WebView.
-- If native, identify the comment list model/adapter and patch sorting there.
-- Package the result through a Morphe patch bundle for collaboration and reuse.
-
-No signature, licensing, payment, server, or entitlement checks are bypassed here.
-
-## Current package target
-
-Google Play package for `DER STANDARD Nachrichten`:
+1. Install Morphe Manager on your Android device.
+2. Open Morphe Manager and add this custom patch source:
 
 ```text
-derstandard.at.istandardx
+https://raw.githubusercontent.com/Stellanis/derstandard-comment-ranker-patches/main/patches-bundle.json
 ```
 
-## Setup already done
+3. Refresh the source and confirm it shows the latest bundle version.
+4. Select the app `DER STANDARD Nachrichten` / package `derstandard.at.istandardx`.
+5. Enable the patch `Comment ranker`.
+6. Patch the APK and install the patched app.
 
-- Android SDK platform-tools are available locally.
-- Apktool `3.0.2` downloaded to `tools/`.
-- jadx `1.5.5` downloaded to `tools/`.
-- Morphe patches template cloned into `patch-bundle/`.
+If Morphe still shows an older version or zero patches, remove the source, force stop Morphe Manager, and add the source again.
 
-The Morphe template currently requires GitHub Packages credentials for the `app.morphe.patches` Gradle plugin. See `docs/RESEARCH.md`.
+## Notes
 
-## Implemented patch path
+- The patch targets package `derstandard.at.istandardx`.
+- The patch injects the bundled comment ranker into article WebViews.
+- No derStandard APKs, signed APKs, keystores, or app build outputs are stored in this repository.
 
-The pulled production APK uses an internal Android `WebView` for derstandard.at pages:
+## License
 
-- `derstandard.at.istandardx.features.webview.fragment.WebViewViewModel`
-- anonymous client class `WebViewViewModel$webViewClient$1`
-- hook method: `onPageFinished(WebView webView, String url)`
-
-The current patch injects:
-
-- `assets/extension/content.js`
-- `assets/extension/rating.js`
-- a small `chrome.storage.sync` compatibility shim backed by WebView `localStorage`
-
-Injected assets are copied into:
-
-```text
-assets/dst-ranker/
-```
-
-The helper class added to the APK decode tree is:
-
-```text
-derstandard.at.istandardx.features.webview.fragment.CommentRankerInjector
-```
-
-## Current device install status
-
-The original Play Store-signed app was removed and the debug-signed patched split install was installed successfully via:
-
-```powershell
-adb uninstall derstandard.at.istandardx
-adb install-multiple `
-  dist\signed\base-ranker-signed.apk `
-  dist\signed\split_config.arm64_v8a-signed.apk `
-  dist\signed\split_config.xxhdpi-signed.apk
-```
-
-Smoke test:
-
-- App starts through the launcher intent.
-- Logcat showed WebView activity and no immediate app crash.
-- Observed CleverPush network errors are unrelated to the patch.
-
-## Rebuild flow
-
-```powershell
-.\scripts\pull-derstandard-apk.ps1 -DeviceSerial "192.168.123.160:34525" -User 0
-.\scripts\inspect-apk.ps1
-.\scripts\decode-apk.ps1
-.\scripts\apply-webview-injection-patch.ps1
-java -jar tools\apktool_3.0.2.jar b analysis\decompiled\apktool\base -o dist\base-ranker-unsigned.apk
-```
-
-Then zipalign/sign `dist\base-ranker-unsigned.apk` plus the two split APKs with the same signing key and install with `adb install-multiple`.
-
-## Wireless Debugging workflow
-
-On the phone:
-
-1. Enable Developer options.
-2. Enable Wireless Debugging.
-3. Open `Pair device with pairing code`.
-4. Run:
-
-```powershell
-.\scripts\pair-wireless-adb.ps1 -PairHostPort "PHONE_IP:PAIR_PORT" -PairCode "123456" -ConnectHostPort "PHONE_IP:DEBUG_PORT"
-```
-
-Then pull the APK:
-
-```powershell
-.\scripts\pull-derstandard-apk.ps1
-```
-
-Then inspect:
-
-```powershell
-.\scripts\inspect-apk.ps1
-.\scripts\decode-apk.ps1
-```
+GPLv3. See [LICENSE](LICENSE).

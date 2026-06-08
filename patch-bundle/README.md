@@ -1,59 +1,26 @@
-# derStandard Comment Ranker Patches
+# derStandard Comment Ranker Morphe Patch
 
-Morphe patch bundle for injecting the derStandard comment ranking script directly into the Android app WebView.
+Morphe patch bundle for adding comment sorting to `DER STANDARD Nachrichten` on Android.
 
-This repository does not contain or distribute any derStandard APK. Users must provide their own installed APK or APK bundle.
-
-## Patch
-
-### Comment ranker
-
-Injects the bundled ranker JavaScript into article WebViews after a page finishes loading.
-
-Target app:
-
-- App: `DER STANDARD Nachrichten`
-- Package: `derstandard.at.istandardx`
-- APK type: regular APK plus split APKs when present
-
-## Use In Morphe Manager
+## Install With Morphe
 
 Add this raw bundle metadata URL as a custom patch source:
 
 ```text
-https://raw.githubusercontent.com/Stellanis/derstandard-comment-ranker-patches/refs/heads/morphe-source/patches-bundle.json
+https://raw.githubusercontent.com/Stellanis/derstandard-comment-ranker-patches/main/patches-bundle.json
 ```
 
-Then select the `Comment ranker` patch for `DER STANDARD Nachrichten`.
+Then refresh the source, select `DER STANDARD Nachrichten`, and enable the `Comment ranker` patch.
 
-## Build Locally
+## Target
 
-Morphe dependencies are hosted through GitHub Packages. Configure a GitHub token as described in Morphe's setup docs, then run:
+- App: `DER STANDARD Nachrichten`
+- Package: `derstandard.at.istandardx`
+- Patch: `Comment ranker`
 
-```powershell
-cd patch-bundle
-.\gradlew.bat build
-.\gradlew.bat patches:buildAndroid
-.\gradlew.bat generatePatchesList
-```
+## Notes
 
-Expected output:
-
-- `patches/build/libs/*.mpp` with `classes.dex` entries for Morphe Manager
-- `extensions/extension/build/outputs/mpe/extensions/extension.mpe`
-- updated `patches-list.json`
-
-## Manual Proof Patch
-
-The repository root also contains scripts that were used to prove the same hook against a locally pulled APK:
-
-```powershell
-.\scripts\pull-derstandard-apk.ps1
-.\scripts\decode-apk.ps1
-.\scripts\apply-webview-injection-patch.ps1
-```
-
-Those scripts are for local research and validation only. Do not commit pulled APKs, decompiled app code, build outputs, keystores, or signed APKs.
+This repository does not contain or distribute the derStandard APK. Use Morphe with your own APK.
 
 ## License
 
